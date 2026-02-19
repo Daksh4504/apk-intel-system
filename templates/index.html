@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APK Intel System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='nfsu_logo.png') }}">
+        <span>NFSU Gandhinagar</span>
+    </div>
+    <div class="title">APK Malware Analysis System</div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h2>Upload APK for Analysis</h2>
+        <p class="subtitle">
+            Gujarat Police Cyber Cell – Static Malware Forensics
+        </p>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="apkfile" accept=".apk" required>
+            <button type="submit">Upload & Analyze</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    Developed for Cyber Security Research | NFSU Gandhinagar
+</footer>
+
+</body>
+</html>

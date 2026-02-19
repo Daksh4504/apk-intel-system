@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='nfsu_logo.png') }}">
+        <span>NFSU Gandhinagar</span>
+    </div>
+    <div class="title">APK Forensic Analysis Report</div>
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h3>APK Information</h3>
+        <p><b>File Name:</b> {{ apk_name }}</p>
+        <p><b>SHA-256:</b> {{ sha256 }}</p>
+        <p><b>File Size:</b> {{ file_size }}</p>
+        <p><b>Analysis Time:</b> {{ analysis_time }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Permissions Analysis</h3>
+
+        <h4>Requested Permissions</h4>
+        <ul class="perm-list">
+            {% for perm in all_permissions %}
+            <li>{{ perm }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4 class="danger">Dangerous Permissions</h4>
+        {% if dangerous_permissions %}
+        <ul class="danger-list">
+            {% for d in dangerous_permissions %}
+            <li>{{ d }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="safe-text">No dangerous permissions detected</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h3>Risk Assessment</h3>
+        <p><b>Risk Score:</b> {{ risk_score }}</p>
+        <p><b>Final Verdict:</b>
+            <span class="badge {{ verdict|lower }}">{{ verdict }}</span>
+        </p>
+
+        <ul>
+            {% for r in reasons %}
+            <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Forensic Report</h3>
+        <a class="download-btn"
+           href="{{ url_for('download_report', filename=pdf_file) }}"
+           target="_blank">
+           Download PDF Report
+        </a>
+    </div>
+
+    <a class="back-link" href="/">⬅ Upload Another APK</a>
+
+</div>
+<div class="card">
+    <h3>Network Indicators of Compromise (IOCs)</h3>
+
+    <h4>Detected URLs</h4>
+    {% if urls %}
+        <ul>
+            {% for u in urls %}
+                <li>{{ u }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="safe-text">No URLs detected</p>
+    {% endif %}
+
+    <h4>Detected IP Addresses</h4>
+    {% if ips %}
+        <ul>
+            {% for ip in ips %}
+                <li>{{ ip }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="safe-text">No IP addresses detected</p>
+    {% endif %}
+</div>
+
+
+<footer>
+    APK Intel System | Gujarat Police Cyber Cell | NFSU Gandhinagar
+</footer>
+
+</body>
+</html>
