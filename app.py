@@ -1,5 +1,6 @@
 import os
 import json
+import tempfile
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 
 # -------- Import Analysis Modules --------
@@ -13,7 +14,7 @@ from report_generator.pdf_report import generate_pdf
 # -------- Flask App Setup --------
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = tempfile.gettempdir()
 REPORT_FOLDER = "reports"
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -131,6 +132,7 @@ def history():
 
 # -------- Run Server --------
 if __name__ == "__main__":
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+ 
     os.makedirs(REPORT_FOLDER, exist_ok=True)
     app.run(debug=True)
+
